@@ -1,0 +1,36 @@
+import random
+import time
+
+class MarketingMetrics:
+    def _init_(self):
+        self.metrics = {
+            "recommendation_accuracy": 0.0,
+            "chatbot_response_time_ms": 0,
+            "campaign_conversion_rate": 0.0,
+            "user_engagement_score": 0
+        }
+
+    def generate_metrics(self):
+        # Simulate realistic metric values
+        self.metrics["recommendation_accuracy"] = round(random.uniform(0.7, 0.95), 2)
+        self.metrics["chatbot_response_time_ms"] = random.randint(200, 800)
+        self.metrics["campaign_conversion_rate"] = round(random.uniform(0.02, 0.10), 3)
+        self.metrics["user_engagement_score"] = random.randint(60, 100)
+
+    def display_metrics(self):
+        print("=== Marketing System Metrics ===")
+        for key, value in self.metrics.items():
+            print(f"{key.replace('_', ' ').title()}: {value}")
+
+    def log_metrics(self, filename="marketing_metrics_log.txt"):
+        with open(filename, "a") as file:
+            timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
+            file.write(f"[{timestamp}] {self.metrics}\n")
+
+metrics_system = MarketingMetrics()
+
+for i in range(5):  
+    metrics_system.generate_metrics()
+    metrics_system.display_metrics()
+    metrics_system.log_metrics()
+    time.sleep(2)
