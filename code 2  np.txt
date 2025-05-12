@@ -1,0 +1,29 @@
+import pandas as pd
+from sklearn.cluster import KMeans 
+data = {
+    'CustomerID': [1, 2, 3, 4, 5],
+    'Age': [25, 34, 45, 23, 35],
+    'AnnualIncome': [50000, 60000, 80000, 45000, 75000],
+    'SpendingScore': [30, 70, 90, 20, 80],  
+    'RecentCategory': ['Books', 'Electronics', 'Fashion', 'Books', 'Fashion']
+}
+
+df = pd.DataFrame(data)
+features = df[['Age', 'AnnualIncome', 'SpendingScore']]
+kmeans = KMeans(n_clusters=2, random_state=0)
+df['Segment'] = kmeans.fit_predict(features)
+def recommend(category):
+    if category == 'Books':
+        return 'Recommended: "Atomic Habits", "Deep Work"'
+    elif category == 'Electronics':
+        return 'Recommended: Wireless Earbuds, Smartwatch'
+    elif category == 'Fashion':
+        return 'Recommended: Denim Jackets, Trendy Sneakers'
+    else:
+        return 'Recommended: Explore New Arrivals!'
+
+df['Recommendation'] = df['RecentCategory'].apply(recommend)
+for _, row in df.iterrows():
+    print(f"Customer {row['CustomerID']} (Segment {row['Segment']})")
+    print(f"Last interest: {row['RecentCategory']}")
+    print(f"{row['Recommendation']}\n")
